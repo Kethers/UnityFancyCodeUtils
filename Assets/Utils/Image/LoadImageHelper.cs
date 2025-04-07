@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
+using MetaFramework.Tools;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Utils
+namespace MetaMeeting
 {
     public class LoadImageHelper : MonoBehaviour
     {
@@ -21,7 +22,7 @@ namespace Utils
             StartCoroutine(LoadTexture(url, (tex) => {
                 rawImg.texture = tex;
                 if (autoSetActiveWhenLoadEnd)
-                    rawImg.SafeSetActive(true);
+                    rawImg.SafeSetEnable(true);
             }));
         }
         
@@ -38,7 +39,7 @@ namespace Utils
             StartCoroutine(LoadTexture(url, (tex) => {
                 img.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
                 if (autoSetActiveWhenLoadEnd)
-                    img.SafeSetActive(true);
+                    img.SafeSetEnable(true);
             }));
         }
 

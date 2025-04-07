@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Utils
+namespace MetaFramework.Tools
 {
 	public static partial class GameObjectUtil
 	{
@@ -241,7 +241,7 @@ namespace Utils
 			}
 		}
 
-		public static void SafeSetActive(this Behaviour behaviour, bool enable, bool showLog = true)
+		public static void SafeSetEnable(this Behaviour behaviour, bool enable, bool showLog = true)
 		{
 			if (behaviour == null)
 			{
