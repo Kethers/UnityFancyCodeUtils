@@ -284,7 +284,7 @@ namespace MetaFramework.Tools
 				return null;
 			}
 
-			return cmpt.SafeFindTrans(path)?.gameObject;
+			return cmpt.SafeFindTrans(path, showLog)?.gameObject;
 		}
 
 		public static T SafeGetCmpt<T>(this Component cmpt, string path, bool showLog = true) where T : Component
@@ -299,7 +299,7 @@ namespace MetaFramework.Tools
 				return null;
 			}
 
-			return cmpt.SafeFindTrans(path).SafeGetCmpt<T>();
+			return cmpt.SafeFindTrans(path, showLog).SafeGetCmpt<T>(showLog);
 		}
 
 		public static T SafeGetCmpt<T>(this Component cmpt, bool showLog = true) where T : Component
@@ -317,6 +317,36 @@ namespace MetaFramework.Tools
 			return cmpt.GetComponent<T>();
 		}
 		
+		public static T SafeGetCmpt<T>(this GameObject go, string path, bool showLog = true) where T : Component
+		{
+			if (go == null)
+			{
+				if (showLog)
+				{
+					Debug.LogError($"Component NULL ERROR from SafeGetCmpt");
+				}
+
+				return null;
+			}
+
+			return go.transform.SafeFindTrans(path, showLog).SafeGetCmpt<T>(showLog);
+		}
+
+		public static T SafeGetCmpt<T>(this GameObject go, bool showLog = true) where T : Component
+		{
+			if (go == null)
+			{
+				if (showLog)
+				{
+					Debug.LogError($"Component NULL ERROR from SafeGetCmpt");
+				}
+
+				return null;
+			}
+
+			return go.GetComponent<T>();
+		}
+		
 		public static T SafeAttachCmpt<T>(this Component cmpt, string path, bool showLog = true) where T : Component
 		{
 			if (cmpt == null)
@@ -329,9 +359,9 @@ namespace MetaFramework.Tools
 				return null;
 			}
 
-			var oldCmpt = cmpt.SafeGetCmpt<T>(path);
+			var oldCmpt = cmpt.SafeGetCmpt<T>(path, showLog);
 
-			return oldCmpt ?? cmpt.SafeGetGameObject(path)?.AddComponent<T>();
+			return oldCmpt ?? cmpt.SafeGetGameObject(path, showLog)?.AddComponent<T>();
 		}
 		
 		public static T SafeAttachCmpt<T>(this Component cmpt, bool showLog = true) where T : Component
@@ -346,7 +376,7 @@ namespace MetaFramework.Tools
 				return null;
 			}
 
-			var oldCmpt = cmpt.SafeGetCmpt<T>();
+			var oldCmpt = cmpt.SafeGetCmpt<T>(showLog);
 
 			return oldCmpt ?? cmpt.gameObject.AddComponent<T>();
 		}
@@ -379,7 +409,7 @@ namespace MetaFramework.Tools
 				return null;
 			}
 
-			return cmpt.transform.SafeFindTrans(path);
+			return cmpt.transform.SafeFindTrans(path, showLog);
 		}
 
 		public static Transform SafeGetTrans(this Component cmpt, bool showLog = true)
